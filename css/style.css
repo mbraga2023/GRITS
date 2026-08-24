@@ -199,24 +199,26 @@ a {
    ========================================================= */
 
 .main-content {
-
     width: 100%;
-
-    min-height: var(--main-min-height);
-
 }
-
 
 .content-inner {
-
     width: var(--content-width);
-
     margin: 0 auto;
-
     padding-top: 98px;
-
+    padding-bottom: 96px;
 }
 
+@media (max-width: 640px) {
+
+    .content-inner {
+        width: calc(100% - 32px);
+
+        padding-top: 40px;
+        padding-bottom: 96px;
+    }
+
+}
 
 /* ---------------------------------------------------------
    Back Link
