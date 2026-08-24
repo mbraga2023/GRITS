@@ -2,87 +2,78 @@
 <html lang="pt-BR">
 
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GRITS — Equipe</title>
+
+    <title>GRITS — Imagem, tecnologia e subjetividade</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
     <link
         href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600&family=Inter:wght@700&family=Poppins:wght@400;600&display=swap"
         rel="stylesheet">
 
     <link rel="stylesheet" href="css/style.css">
+
 </head>
 
 <body>
-    <header class="site-header">
-        <div class="header-inner">
-            <a class="brand" href="index.html" aria-label="GRITS - Página inicial">
-                <svg class="brand-mark" viewBox="0 0 42 42" aria-hidden="true">
-                    <circle cx="21" cy="21" r="17" fill="none" stroke="currentColor" stroke-width="1.5" />
-                    <circle cx="21" cy="21" r="12.5" fill="none" stroke="currentColor" stroke-width="1.5" />
-                    <path d="M21 8.5c-6.9 0-12.5 5.6-12.5 12.5S14.1 33.5 21 33.5" fill="none" stroke="currentColor"
-                        stroke-width="1.5" />
-                    <path d="M21 12c-5 0-9 4-9 9s4 9 9 9" fill="none" stroke="currentColor" stroke-width="1.5" />
-                </svg>
-                <span class="brand-name">GRITS</span>
-            </a>
 
-            <nav class="main-nav" aria-label="Navegação principal">
-                <a href="index.html">Home</a>
-                <a href="publicacoes.html">Publicações</a>
-                <a class="active" href="equipe.html">Equipe</a>
-            </nav>
-        </div>
-    </header>
+    <!-- Reusable header -->
+    <div id="header"></div>
+
 
     <main class="main-content">
+
         <div class="content-inner">
-            <a class="back-link" href="#">← Grupo de Pesquisa</a>
+
+            <a class="back-link" href="#">
+                ← Grupo de Pesquisa
+            </a>
 
             <article class="research-content">
-                <h1>Equipe</h1>
+
+                <h1>
+                    Imagem, tecnologia e subjetividade
+                </h1>
 
                 <p>
-                    Conteúdo da página de equipe. Esta página já utiliza a mesma estrutura,
-                    tipografia, navegação, cabeçalho e rodapé definidos para o site GRITS.
+                    O Grupo de Pesquisa Imagem, Tecnologia e Subjetividade (UnB-CNPq) tem investigado
+                    – a partir de uma perspectiva genealógica – as relações entre o regime de visibilidade
+                    e os atuais modos de viver. Partindo do pressuposto de que as novas tecnologias da
+                    imagem estão no centro das transformações relevantes que o mundo contemporâneo atravessa,
+                    o grupo pretende analisar de que modo elas intensificam novas modalidades subjetivas.
+                    Nesse sentido, nossas pesquisas objetivam mapear e problematizar de que maneira a atual
+                    produção imagética participa das reconfigurações da experiência temporal e dos novos
+                    modos de nos constituirmos como sujeitos e corpos, redimensionando também as maneiras de
+                    sonhar e sofrer. Trata-se de pensar a profusão de imagens de todo tipo, possibilitadas
+                    pelas novas tecnologias e por uma outra relação com o tempo, investigando em consequência
+                    as novas condições perceptivas e a alteridade contemporânea. No âmbito deste projeto,
+                    estudamos e debatemos o mal-estar que se vincula, em especial, ao atual senso de
+                    futilidade, a partir dos conceitos de antecipação, risco e resiliência.
                 </p>
+
+                <figure class="hero-image">
+
+                    <img src="assets/library.jpg" alt="Interior de uma biblioteca histórica">
+
+                </figure>
+
             </article>
+
         </div>
+
     </main>
 
-    <footer class="site-footer">
-        <div class="footer-inner">
-            <div class="footer-brand">
-                <a class="brand" href="index.html" aria-label="GRITS - Página inicial">
-                    <svg class="brand-mark" viewBox="0 0 42 42" aria-hidden="true">
-                        <circle cx="21" cy="21" r="17" fill="none" stroke="currentColor" stroke-width="1.5" />
-                        <circle cx="21" cy="21" r="12.5" fill="none" stroke="currentColor" stroke-width="1.5" />
-                        <path d="M21 8.5c-6.9 0-12.5 5.6-12.5 12.5S14.1 33.5 21 33.5" fill="none" stroke="currentColor"
-                            stroke-width="1.5" />
-                        <path d="M21 12c-5 0-9 4-9 9s4 9 9 9" fill="none" stroke="currentColor" stroke-width="1.5" />
-                    </svg>
-                    <span class="brand-name">GRITS</span>
-                </a>
-                <p class="copyright">© 2026 GRITS. Todos os direitos reservados.</p>
-            </div>
 
-            <div class="footer-column">
-                <h2>SITE</h2>
-                <a href="index.html">Home</a>
-                <a href="publicacoes.html">Publicações</a>
-                <a class="active" href="equipe.html">Equipe</a>
-            </div>
+    <!-- Reusable footer -->
+    <div id="footer"></div>
 
-            <div class="footer-column">
-                <h2>LINKS</h2>
-                <a href="#">CNPq</a>
-            </div>
-        </div>
-    </footer>
 
     <script src="js/main.js"></script>
+
 </body>
 
 </html>
