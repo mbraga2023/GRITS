@@ -93,11 +93,12 @@ body {
 
 
 a {
-
     color: inherit;
-
     text-decoration: none;
-
+    transition:
+        color 0.2s ease,
+        text-decoration-color 0.2s ease,
+        font-weight 0.2s ease;
 }
 
 
@@ -178,26 +179,22 @@ a {
 
 
 .main-nav a {
-
     font-family: "IBM Plex Sans", sans-serif;
-
     font-size: 16px;
-
     font-weight: 600;
-
     line-height: 1;
-
     color: var(--red);
+}
 
+.main-nav a:hover {
+    text-decoration: underline;
+    text-underline-offset: 3px;
 }
 
 
 .main-nav a.active {
-
     text-decoration: underline;
-
     text-underline-offset: 3px;
-
 }
 
 
@@ -455,6 +452,11 @@ a {
 
     color: var(--footer-text);
 
+}
+
+.footer-column a:hover {
+    text-decoration: underline;
+    text-underline-offset: 3px;
 }
 
 
@@ -795,7 +797,9 @@ a {
 }
 
 .publication-link:hover {
-    opacity: 0.75;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    opacity: 1;
 }
 
 .publication-link span {
