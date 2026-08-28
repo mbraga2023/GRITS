@@ -550,7 +550,7 @@ function createPublicationCard(publication) {
                 Acessar publicação
 
                 <img
-                    src="/assets/arrowUp.png"
+                    src="../assets/arrowUp.png"
                     alt="Link externo">
 
             </a>
