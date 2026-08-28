@@ -686,12 +686,12 @@ function createPublicationCard(
             >
 
                 <span>
-                    Acessar publicação
+                    Acessar publicação 
                 </span>
 
                 <img
                     src="${basePath}assets/arrowUp.png"
-                    alt="Link externo" style="width: 14px; height: 14px;"
+                    alt="Link externo" style="width: 9px; height: 9px; margin-left: 5px;"
                 >
 
             </a>
