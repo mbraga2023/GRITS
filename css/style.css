@@ -9,7 +9,7 @@
 
     --main-min-height: 927px;
 
-    --footer-height: 221px;
+    --footer-height: 20rem;
 
 
     /* Main colors */
@@ -334,7 +334,7 @@ a {
 .site-footer {
 
     width: 100%;
-
+    
     min-height: var(--footer-height);
 
     background: var(--base-surface);
