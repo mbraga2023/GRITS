@@ -313,7 +313,7 @@ async function initializePublications() {
     try {
 
         const response =
-            await fetch("/data/publications.json");
+            await fetch("../data/publications.json");
 
         if (!response.ok) {
 
