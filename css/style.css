@@ -17,11 +17,14 @@
     --red: #CB3448;
 
     --heading: #7A1F2B;
-
+    --heading-primary: #891300;
+    --btn-primary:#891300;
+    --card-border:#D4BDBD;
     --purple: #645DD7;
-
+    --gold:#9D7928;
+    
     --body: #15171B;
-
+    --bg-image: linear-gradient(rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.7)), url("../assets/bg-home.png");
 
     /* Footer */
 
@@ -71,8 +74,9 @@ body {
 
     margin: 0;
 
-    background: var(--surface);
-
+    background-image: var(--bg-image);
+    background-repeat: top-left;
+    background-position: bottom center;
     color: var(--body);
 
     font-family: "IBM Plex Sans", sans-serif;
@@ -147,7 +151,7 @@ a {
 
     width: auto;
 
-    height: 50px;
+    height: 64px;
 
     max-width: 100%;
 
@@ -236,7 +240,7 @@ a {
 
     font-weight: 400;
 
-    color: var(--purple);
+    color: var(--gold);
 
 }
 
@@ -268,7 +272,7 @@ a {
 
     line-height: 1.2;
 
-    color: var(--heading);
+    color: var(--heading-primary);
 
 }
 
@@ -367,7 +371,7 @@ a {
 
 .footer-brand {
 
-    min-height: 170px;
+    min-height: 130px;
 
     display: flex;
 
@@ -393,7 +397,7 @@ a {
 
     width: auto;
 
-    height: 50px;
+    height: 80px;
 
     max-width: 100%;
 
@@ -455,13 +459,14 @@ a {
 
 .copyright {
 
-    margin: 0;
+    margin: 2rem;
 
     font-family: "IBM Plex Sans", sans-serif;
 
     font-size: 16px;
 
     font-weight: 400;
+    line-height: 27px;
 
     color: var(--copyright);
 
@@ -610,14 +615,14 @@ a {
     margin: 0;
     padding: 0 0 10px;
 
-    border-bottom: 2px dotted var(--purple);
+    border-bottom: 2px dotted var(--gold);
 
     font-family: "Poppins", sans-serif;
     font-size: 20px;
     font-weight: 400;
     line-height: 1.2;
 
-    color: var(--purple);
+    color: var(--gold);
 }
 
 
@@ -653,7 +658,7 @@ a {
 
     background: #FFFFFF;
 
-    border: 1px solid #E9E9E9;
+    border: 1px solid var(--card-border);
     border-radius: 10px;
 
     box-shadow: none;
@@ -682,10 +687,10 @@ a {
 
     font-family: "IBM Plex Sans", sans-serif;
     font-size: 16px;
-    font-weight: 600;
+    font-weight: 400;
     line-height: 1.2;
 
-    color: var(--heading);
+    color: var(--heading-primary);
 }
 
 
@@ -703,15 +708,15 @@ a {
 
     padding: 0 8px;
 
-    border: 1px solid var(--purple);
+    border: 1px solid var(--btn-primary);
     border-radius: 4px;
 
     font-family: "IBM Plex Sans", sans-serif;
     font-size: 16px;
-    font-weight: 600;
+    font-weight: 500;
     line-height: 1;
-
-    color: var(--purple);
+    background-color: var(--btn-primary);
+    color: #F2F2F7;
 }
 
 
@@ -739,7 +744,7 @@ a {
     width: 100%;
     height: 40px;
 
-    border-top: 1px solid var(--purple);
+    border-top: 1px solid var(--gold);
 
     display: flex;
     align-items: center;
@@ -856,14 +861,14 @@ a {
     margin: 0;
     padding: 0 0 10px;
 
-    border-bottom: 2px dotted var(--purple);
+    border-bottom: 2px dotted var(--gold);
 
     font-family: "Poppins", sans-serif;
     font-size: 20px;
     font-weight: 400;
     line-height: 1.2;
 
-    color: var(--purple);
+    color: var(--gold);
 }
 
 
@@ -895,7 +900,7 @@ a {
 
     background: #FFFFFF;
 
-    border: 1px solid #E9E9E9;
+    border: 1px solid var(--card-border);
     border-radius: 5px;
 
     box-shadow: none;
@@ -914,7 +919,7 @@ a {
     font-weight: 500;
     line-height: 1.2;
 
-    color: var(--heading);
+    color: var(--heading-primary);
 }
 
 
