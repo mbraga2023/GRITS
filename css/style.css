@@ -771,7 +771,7 @@ a {
     font-weight: 400;
     line-height: 1;
 
-    color: var(--heading);
+    color: var(--heading-primary);
 }
 
 
