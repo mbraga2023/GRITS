@@ -1,0 +1,42 @@
+[
+    {
+        "id": 1,
+        "year": 2024,
+        "type": "Tese",
+        "title": "Aether Premium Wearables",
+        "author": "Autor 1",
+        "url": "#"
+    },
+    {
+        "id": 2,
+        "year": 2024,
+        "type": "Artigo",
+        "title": "Imagem, tecnologia e subjetividade",
+        "author": "Autor 2",
+        "url": "#"
+    },
+    {
+        "id": 3,
+        "year": 2023,
+        "type": "Dissertação",
+        "title": "Tecnologia e os novos modos de viver",
+        "author": "Autor 1",
+        "url": "#"
+    },
+    {
+        "id": 4,
+        "year": 2023,
+        "type": "Artigo",
+        "title": "Regimes de visibilidade na contemporaneidade",
+        "author": "Autor 3",
+        "url": "#"
+    },
+    {
+        "id": 5,
+        "year": 2022,
+        "type": "Tese",
+        "title": "Imagens e experiência temporal",
+        "author": "Autor 2",
+        "url": "#"
+    }
+]

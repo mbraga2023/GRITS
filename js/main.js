@@ -209,3 +209,357 @@ function setActivePage() {
         });
 
 }
+
+document.addEventListener("DOMContentLoaded", async () => {
+
+    await loadComponent(
+        "#header",
+        "components/header.html"
+    );
+
+    await loadComponent(
+        "#footer",
+        "components/footer.html"
+    );
+
+    setActivePage();
+
+    /*
+     * Only initialize publications if the page
+     * contains the publications list.
+     */
+    if (document.querySelector("#publications-list")) {
+        await initializePublications();
+    }
+
+});
+
+
+/* =========================================================
+   COMPONENTS
+   ========================================================= */
+
+async function loadComponent(selector, path) {
+
+    const element = document.querySelector(selector);
+
+    if (!element) {
+        return;
+    }
+
+    try {
+
+        const response = await fetch(path);
+
+        if (!response.ok) {
+            throw new Error(
+                `HTTP ${response.status} - ${response.statusText}`
+            );
+        }
+
+        element.innerHTML = await response.text();
+
+    } catch (error) {
+
+        console.error(
+            `Could not load component: ${path}`,
+            error
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   ACTIVE PAGE
+   ========================================================= */
+
+function setActivePage() {
+
+    let currentFile =
+        window.location.pathname
+            .split("/")
+            .pop()
+            .toLowerCase();
+
+    if (!currentFile) {
+        currentFile = "index.html";
+    }
+
+    const currentPage =
+        currentFile.replace(".html", "");
+
+
+    document
+        .querySelectorAll(".main-nav a")
+        .forEach(link => {
+
+            if (link.dataset.page === currentPage) {
+                link.classList.add("active");
+            }
+
+        });
+
+}
+
+
+/* =========================================================
+   PUBLICATIONS
+   ========================================================= */
+
+async function initializePublications() {
+
+    try {
+
+        const response =
+            await fetch("/data/publications.json");
+
+        if (!response.ok) {
+
+            throw new Error(
+                `HTTP ${response.status}`
+            );
+
+        }
+
+        const publications =
+            await response.json();
+
+
+        setupPublicationFilters(publications);
+
+        renderPublications(publications);
+
+
+    } catch (error) {
+
+        console.error(
+            "Could not load publications:",
+            error
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   FILTER SETUP
+   ========================================================= */
+
+function setupPublicationFilters(publications) {
+
+    const yearFilter =
+        document.querySelector("#year-filter");
+
+    const authorFilter =
+        document.querySelector("#author-filter");
+
+
+    /* -----------------------------------------
+       Years
+       ----------------------------------------- */
+
+    const years = [
+        ...new Set(
+            publications.map(
+                publication => publication.year
+            )
+        )
+    ].sort((a, b) => b - a);
+
+
+    years.forEach(year => {
+
+        const option =
+            document.createElement("option");
+
+        option.value = year;
+        option.textContent = year;
+
+        yearFilter.appendChild(option);
+
+    });
+
+
+    /* -----------------------------------------
+       Authors
+       ----------------------------------------- */
+
+    const authors = [
+        ...new Set(
+            publications.map(
+                publication => publication.author
+            )
+        )
+    ].sort();
+
+
+    authors.forEach(author => {
+
+        const option =
+            document.createElement("option");
+
+        option.value = author;
+        option.textContent = author;
+
+        authorFilter.appendChild(option);
+
+    });
+
+
+    /* -----------------------------------------
+       Events
+       ----------------------------------------- */
+
+    yearFilter.addEventListener(
+        "change",
+        () => filterPublications(publications)
+    );
+
+    authorFilter.addEventListener(
+        "change",
+        () => filterPublications(publications)
+    );
+
+}
+
+
+/* =========================================================
+   FILTER
+   ========================================================= */
+
+function filterPublications(publications) {
+
+    const selectedYear =
+        document.querySelector("#year-filter").value;
+
+    const selectedAuthor =
+        document.querySelector("#author-filter").value;
+
+
+    const filtered =
+        publications.filter(publication => {
+
+            const matchesYear =
+                selectedYear === "all" ||
+                String(publication.year) === selectedYear;
+
+
+            const matchesAuthor =
+                selectedAuthor === "all" ||
+                publication.author === selectedAuthor;
+
+
+            return matchesYear && matchesAuthor;
+
+        });
+
+
+    renderPublications(filtered);
+
+}
+
+
+/* =========================================================
+   RENDER CARDS
+   ========================================================= */
+
+function renderPublications(publications) {
+
+    const list =
+        document.querySelector("#publications-list");
+
+    const noPublications =
+        document.querySelector("#no-publications");
+
+
+    list.innerHTML = "";
+
+
+    if (publications.length === 0) {
+
+        noPublications.hidden = false;
+
+        return;
+
+    }
+
+
+    noPublications.hidden = true;
+
+
+    publications.forEach(publication => {
+
+        const card =
+            createPublicationCard(publication);
+
+        list.appendChild(card);
+
+    });
+
+}
+
+
+/* =========================================================
+   CREATE CARD
+   ========================================================= */
+
+function createPublicationCard(publication) {
+
+    const article =
+        document.createElement("article");
+
+    article.className =
+        "publication-card";
+
+
+    article.innerHTML = `
+
+        <div class="publication-top">
+
+            <span class="publication-year">
+                ${publication.year}
+            </span>
+
+            <span class="publication-type">
+                ${publication.type}
+            </span>
+
+        </div>
+
+
+        <h2>
+            ${publication.title}
+        </h2>
+
+
+        <div class="publication-bottom">
+
+            <span class="publication-author">
+                ${publication.author}
+            </span>
+
+            <a
+                href="${publication.url}"
+                class="publication-link"
+                target="_blank"
+                rel="noopener noreferrer">
+
+                Acessar publicação
+
+                <img
+                    src="/assets/arrowUp.png"
+                    alt="Link externo">
+
+            </a>
+
+        </div>
+
+    `;
+
+
+    return article;
+
+}
