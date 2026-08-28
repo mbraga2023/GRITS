@@ -143,7 +143,10 @@ function fixComponentPaths(basePath) {
             const asset = element.dataset.asset;
 
             if (asset === "logo") {
-                element.src = `${basePath}assets/logo-1.png`;
+                element.src = `${basePath}assets/new-logo-transparent.png`;
+            }
+            if (asset === "logo-footer") {
+                element.src = `${basePath}assets/new-logo2-transparent.png`;
             }
 
         });
