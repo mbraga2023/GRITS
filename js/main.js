@@ -214,12 +214,12 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     await loadComponent(
         "#header",
-        "components/header.html"
+        "../components/header.html"
     );
 
     await loadComponent(
         "#footer",
-        "components/footer.html"
+        "../components/footer.html"
     );
 
     setActivePage();
