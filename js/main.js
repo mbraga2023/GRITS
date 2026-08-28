@@ -691,7 +691,7 @@ function createPublicationCard(
 
                 <img
                     src="${basePath}assets/arrowUp.png"
-                    alt="Link externo"
+                    alt="Link externo" style="width: 14px; height: 14px;"
                 >
 
             </a>
