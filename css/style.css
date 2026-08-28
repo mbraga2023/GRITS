@@ -9,7 +9,7 @@
 
     --main-min-height: 927px;
 
-    --footer-height: 20rem;
+    --footer-height: 221px;
 
 
     /* Main colors */
@@ -71,21 +71,25 @@ html {
 
 
 body {
-
+    max-width: 100%;
+    min-height: 100vh;
     margin: 0;
 
+    display: flex;
+    flex-direction: column;
+
     background-image: var(--bg-image);
-    background-repeat: top-left;
-    background-position: bottom center;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+
     color: var(--body);
 
     font-family: "IBM Plex Sans", sans-serif;
-
     font-size: 16px;
-
     font-weight: 400;
-
 }
+
 
 
 a {
@@ -204,6 +208,7 @@ a {
 
 .main-content {
     width: 100%;
+    flex: 1;
 }
 
 .content-inner {
@@ -334,7 +339,7 @@ a {
 .site-footer {
 
     width: 100%;
-    
+
     min-height: var(--footer-height);
 
     background: var(--base-surface);
