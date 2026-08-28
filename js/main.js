@@ -2,6 +2,10 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     const basePath = getBasePath();
 
+    /*
+     * Load reusable components
+     */
+
     await loadComponent(
         "#header",
         `${basePath}components/header.html`
@@ -12,8 +16,35 @@ document.addEventListener("DOMContentLoaded", async () => {
         `${basePath}components/footer.html`
     );
 
+
+    /*
+     * Fix links and assets inside
+     * the loaded components
+     */
+
     fixComponentPaths(basePath);
+
+
+    /*
+     * Set active navigation item
+     */
+
     setActivePage();
+
+
+    /*
+     * Publications page
+     */
+
+    if (
+        document.querySelector("#publications-list")
+    ) {
+
+        await initializePublications(
+            basePath
+        );
+
+    }
 
 });
 
@@ -24,11 +55,31 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 function getBasePath() {
 
-    const currentPath = window.location.pathname;
+    const currentPath =
+        window.location.pathname;
 
-    return currentPath.includes("/pages/")
-        ? "../"
-        : "./";
+
+    /*
+     * Pages inside /pages/
+     * need to go one level up.
+     *
+     * /index.html
+     *     -> ./
+     *
+     * /pages/publicacoes.html
+     *     -> ../
+     */
+
+    if (
+        currentPath.includes("/pages/")
+    ) {
+
+        return "../";
+
+    }
+
+
+    return "./";
 
 }
 
@@ -37,28 +88,48 @@ function getBasePath() {
    LOAD COMPONENT
    ========================================================= */
 
-async function loadComponent(selector, path) {
+async function loadComponent(
+    selector,
+    path
+) {
 
-    const element = document.querySelector(selector);
+    const element =
+        document.querySelector(selector);
+
 
     if (!element) {
-        console.error(`Element ${selector} was not found.`);
+
+        console.error(
+            `Element ${selector} was not found.`
+        );
+
         return;
+
     }
+
 
     try {
 
-        const response = await fetch(path);
+        const response =
+            await fetch(path);
+
 
         if (!response.ok) {
+
             throw new Error(
                 `HTTP ${response.status} - ${response.statusText}`
             );
+
         }
 
-        const html = await response.text();
 
-        element.innerHTML = html;
+        const html =
+            await response.text();
+
+
+        element.innerHTML =
+            html;
+
 
     } catch (error) {
 
@@ -67,15 +138,6 @@ async function loadComponent(selector, path) {
             error
         );
 
-        element.innerHTML = `
-            <p style="
-                padding: 20px;
-                color: red;
-                font-family: sans-serif;
-            ">
-                Error loading component.
-            </p>
-        `;
     }
 
 }
@@ -85,188 +147,57 @@ async function loadComponent(selector, path) {
    COMPONENT PATHS
    ========================================================= */
 
-function fixComponentPaths(basePath) {
+function fixComponentPaths(
+    basePath
+) {
 
     /*
-     * Header links
-     */
-
-    const homeLinks = document.querySelectorAll(
-        '[data-link="home"]'
-    );
-
-    homeLinks.forEach(link => {
-        link.href = `${basePath}index.html`;
-    });
-
-
-    const publicationsLinks = document.querySelectorAll(
-        '[data-link="publicacoes"]'
-    );
-
-    publicationsLinks.forEach(link => {
-        link.href = `${basePath}pages/publicacoes.html`;
-    });
-
-
-    const teamLinks = document.querySelectorAll(
-        '[data-link="equipe"]'
-    );
-
-    teamLinks.forEach(link => {
-        link.href = `${basePath}pages/equipe.html`;
-    });
-
-
-    /*
-     * Logo
-     */
-
-    const logos = document.querySelectorAll(
-        '[data-asset="logo"]'
-    );
-
-    logos.forEach(logo => {
-        logo.src = `${basePath}assets/logo-1.png`;
-    });
-
-
-    /*
-     * Footer links/assets can also use these
-     * data attributes if needed.
+     * HOME
      */
 
     document
-        .querySelectorAll('[data-asset]')
-        .forEach(element => {
-
-            const asset = element.dataset.asset;
-
-            if (asset === "logo") {
-                element.src = `${basePath}assets/new-logo-transparent.png`;
-            }
-            if (asset === "logo-footer") {
-                element.src = `${basePath}assets/new-logo2-transparent.png`;
-            }
-
-        });
-
-}
-
-
-/* =========================================================
-   ACTIVE PAGE
-   ========================================================= */
-
-function setActivePage() {
-
-    let currentFile =
-        window.location.pathname
-            .split("/")
-            .pop()
-            .toLowerCase();
-
-    /*
-     * Empty filename means index.html
-     */
-
-    if (!currentFile) {
-        currentFile = "index.html";
-    }
-
-
-    /*
-     * Convert filename to page name
-     *
-     * index.html          -> index
-     * publicacoes.html    -> publicacoes
-     * equipe.html         -> equipe
-     */
-
-    let currentPage =
-        currentFile.replace(".html", "");
-
-
-    /*
-     * Home
-     */
-
-    if (currentPage === "index") {
-        currentPage = "index";
-    }
-
-
-    document
-        .querySelectorAll(".main-nav a")
+        .querySelectorAll(
+            '[data-link="home"]'
+        )
         .forEach(link => {
 
-            link.classList.remove("active");
-
-            if (link.dataset.page === currentPage) {
-                link.classList.add("active");
-            }
+            link.href =
+                `${basePath}index.html`;
 
         });
 
-}
-
-document.addEventListener("DOMContentLoaded", async () => {
-
-    await loadComponent(
-        "#header",
-        "../components/header.html"
-    );
-
-    await loadComponent(
-        "#footer",
-        "../components/footer.html"
-    );
-
-    setActivePage();
 
     /*
-     * Only initialize publications if the page
-     * contains the publications list.
+     * PUBLICAÇÕES
      */
-    if (document.querySelector("#publications-list")) {
-        await initializePublications();
-    }
 
-});
+    document
+        .querySelectorAll(
+            '[data-link="publicacoes"]'
+        )
+        .forEach(link => {
+
+            link.href =
+                `${basePath}pages/publicacoes.html`;
+
+        });
 
 
-/* =========================================================
-   COMPONENTS
-   ========================================================= */
+    /*
+     * EQUIPE
+     */
 
-async function loadComponent(selector, path) {
+    document
+        .querySelectorAll(
+            '[data-link="equipe"]'
+        )
+        .forEach(link => {
 
-    const element = document.querySelector(selector);
+            link.href =
+                `${basePath}pages/equipe.html`;
 
-    if (!element) {
-        return;
-    }
+        });
 
-    try {
-
-        const response = await fetch(path);
-
-        if (!response.ok) {
-            throw new Error(
-                `HTTP ${response.status} - ${response.statusText}`
-            );
-        }
-
-        element.innerHTML = await response.text();
-
-    } catch (error) {
-
-        console.error(
-            `Could not load component: ${path}`,
-            error
-        );
-
-    }
 
 }
 
@@ -283,20 +214,63 @@ function setActivePage() {
             .pop()
             .toLowerCase();
 
+
+    /*
+     * If there is no filename,
+     * assume index.html.
+     */
+
     if (!currentFile) {
-        currentFile = "index.html";
+
+        currentFile =
+            "index.html";
+
     }
+
+
+    /*
+     * index.html
+     *     -> index
+     *
+     * publicacoes.html
+     *     -> publicacoes
+     */
 
     const currentPage =
-        currentFile.replace(".html", "");
+        currentFile.replace(
+            ".html",
+            ""
+        );
 
+
+    /*
+     * Remove previous active states
+     */
 
     document
-        .querySelectorAll(".main-nav a")
+        .querySelectorAll(
+            ".main-nav a"
+        )
         .forEach(link => {
 
-            if (link.dataset.page === currentPage) {
-                link.classList.add("active");
+            link.classList.remove(
+                "active"
+            );
+
+
+            /*
+             * Compare data-page
+             */
+
+            if (
+                link.dataset.page ===
+                currentPage
+            ) {
+
+                link.classList.add(
+                    "active"
+                );
+
             }
 
         });
@@ -308,28 +282,49 @@ function setActivePage() {
    PUBLICATIONS
    ========================================================= */
 
-async function initializePublications() {
+async function initializePublications(
+    basePath
+) {
 
     try {
 
         const response =
-            await fetch("../data/publications.json");
+            await fetch(
+                `${basePath}data/publications.json`
+            );
+
 
         if (!response.ok) {
 
             throw new Error(
-                `HTTP ${response.status}`
+                `HTTP ${response.status} - ${response.statusText}`
             );
 
         }
+
 
         const publications =
             await response.json();
 
 
-        setupPublicationFilters(publications);
+        /*
+         * Create filter options
+         */
 
-        renderPublications(publications);
+        setupPublicationFilters(
+            publications,
+            basePath
+        );
+
+
+        /*
+         * Display publications
+         */
+
+        renderPublications(
+            publications,
+            basePath
+        );
 
 
     } catch (error) {
@@ -348,168 +343,309 @@ async function initializePublications() {
    FILTER SETUP
    ========================================================= */
 
-function setupPublicationFilters(publications) {
+function setupPublicationFilters(
+    publications,
+    basePath
+) {
 
     const yearFilter =
-        document.querySelector("#year-filter");
+        document.querySelector(
+            "#year-filter"
+        );
+
 
     const authorFilter =
-        document.querySelector("#author-filter");
+        document.querySelector(
+            "#author-filter"
+        );
 
 
-    /* -----------------------------------------
-       Years
-       ----------------------------------------- */
+    /*
+     * Safety check
+     */
 
-    const years = [
-        ...new Set(
-            publications.map(
-                publication => publication.year
-            )
-        )
-    ].sort((a, b) => b - a);
-
-
-    years.forEach(year => {
-
-        const option =
-            document.createElement("option");
-
-        option.value = year;
-        option.textContent = year;
-
-        yearFilter.appendChild(option);
-
-    });
-
-
-    /* -----------------------------------------
-       Authors
-       ----------------------------------------- */
-
-    const authors = [
-        ...new Set(
-            publications.map(
-                publication => publication.author
-            )
-        )
-    ].sort();
-
-
-    authors.forEach(author => {
-
-        const option =
-            document.createElement("option");
-
-        option.value = author;
-        option.textContent = author;
-
-        authorFilter.appendChild(option);
-
-    });
-
-
-    /* -----------------------------------------
-       Events
-       ----------------------------------------- */
-
-    yearFilter.addEventListener(
-        "change",
-        () => filterPublications(publications)
-    );
-
-    authorFilter.addEventListener(
-        "change",
-        () => filterPublications(publications)
-    );
-
-}
-
-
-/* =========================================================
-   FILTER
-   ========================================================= */
-
-function filterPublications(publications) {
-
-    const selectedYear =
-        document.querySelector("#year-filter").value;
-
-    const selectedAuthor =
-        document.querySelector("#author-filter").value;
-
-
-    const filtered =
-        publications.filter(publication => {
-
-            const matchesYear =
-                selectedYear === "all" ||
-                String(publication.year) === selectedYear;
-
-
-            const matchesAuthor =
-                selectedAuthor === "all" ||
-                publication.author === selectedAuthor;
-
-
-            return matchesYear && matchesAuthor;
-
-        });
-
-
-    renderPublications(filtered);
-
-}
-
-
-/* =========================================================
-   RENDER CARDS
-   ========================================================= */
-
-function renderPublications(publications) {
-
-    const list =
-        document.querySelector("#publications-list");
-
-    const noPublications =
-        document.querySelector("#no-publications");
-
-
-    list.innerHTML = "";
-
-
-    if (publications.length === 0) {
-
-        noPublications.hidden = false;
+    if (
+        !yearFilter ||
+        !authorFilter
+    ) {
 
         return;
 
     }
 
 
-    noPublications.hidden = true;
+    /* -----------------------------------------------------
+       YEARS
+       ----------------------------------------------------- */
+
+    const years = [
+        ...new Set(
+            publications.map(
+                publication =>
+                    publication.year
+            )
+        )
+    ]
+        .sort(
+            (a, b) => b - a
+        );
 
 
-    publications.forEach(publication => {
+    years.forEach(year => {
 
-        const card =
-            createPublicationCard(publication);
+        const option =
+            document.createElement(
+                "option"
+            );
 
-        list.appendChild(card);
+
+        option.value =
+            year;
+
+
+        option.textContent =
+            year;
+
+
+        yearFilter.appendChild(
+            option
+        );
 
     });
+
+
+    /* -----------------------------------------------------
+       AUTHORS
+       ----------------------------------------------------- */
+
+    const authors = [
+        ...new Set(
+            publications.map(
+                publication =>
+                    publication.author
+            )
+        )
+    ]
+        .sort(
+            (a, b) =>
+                a.localeCompare(
+                    b,
+                    "pt-BR"
+                )
+        );
+
+
+    authors.forEach(author => {
+
+        const option =
+            document.createElement(
+                "option"
+            );
+
+
+        option.value =
+            author;
+
+
+        option.textContent =
+            author;
+
+
+        authorFilter.appendChild(
+            option
+        );
+
+    });
+
+
+    /* -----------------------------------------------------
+       EVENTS
+       ----------------------------------------------------- */
+
+    yearFilter.addEventListener(
+        "change",
+        () => {
+
+            filterPublications(
+                publications,
+                basePath
+            );
+
+        }
+    );
+
+
+    authorFilter.addEventListener(
+        "change",
+        () => {
+
+            filterPublications(
+                publications,
+                basePath
+            );
+
+        }
+    );
 
 }
 
 
 /* =========================================================
-   CREATE CARD
+   FILTER PUBLICATIONS
    ========================================================= */
 
-function createPublicationCard(publication) {
+function filterPublications(
+    publications,
+    basePath
+) {
+
+    const selectedYear =
+        document.querySelector(
+            "#year-filter"
+        ).value;
+
+
+    const selectedAuthor =
+        document.querySelector(
+            "#author-filter"
+        ).value;
+
+
+    const filtered =
+        publications.filter(
+            publication => {
+
+                const matchesYear =
+                    selectedYear === "all" ||
+                    String(
+                        publication.year
+                    ) === selectedYear;
+
+
+                const matchesAuthor =
+                    selectedAuthor === "all" ||
+                    publication.author ===
+                    selectedAuthor;
+
+
+                return (
+                    matchesYear &&
+                    matchesAuthor
+                );
+
+            }
+        );
+
+
+    renderPublications(
+        filtered,
+        basePath
+    );
+
+}
+
+
+/* =========================================================
+   RENDER PUBLICATIONS
+   ========================================================= */
+
+function renderPublications(
+    publications,
+    basePath
+) {
+
+    const list =
+        document.querySelector(
+            "#publications-list"
+        );
+
+
+    const noPublications =
+        document.querySelector(
+            "#no-publications"
+        );
+
+
+    if (!list) {
+
+        return;
+
+    }
+
+
+    /*
+     * Clear existing cards
+     */
+
+    list.innerHTML = "";
+
+
+    /*
+     * No results
+     */
+
+    if (
+        publications.length === 0
+    ) {
+
+        if (noPublications) {
+
+            noPublications.hidden =
+                false;
+
+        }
+
+        return;
+
+    }
+
+
+    if (noPublications) {
+
+        noPublications.hidden =
+            true;
+
+    }
+
+
+    /*
+     * Create cards
+     */
+
+    publications.forEach(
+        publication => {
+
+            const card =
+                createPublicationCard(
+                    publication,
+                    basePath
+                );
+
+
+            list.appendChild(
+                card
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   CREATE PUBLICATION CARD
+   ========================================================= */
+
+function createPublicationCard(
+    publication,
+    basePath
+) {
 
     const article =
-        document.createElement("article");
+        document.createElement(
+            "article"
+        );
+
 
     article.className =
         "publication-card";
@@ -541,17 +677,22 @@ function createPublicationCard(publication) {
                 ${publication.author}
             </span>
 
+
             <a
                 href="${publication.url}"
                 class="publication-link"
                 target="_blank"
-                rel="noopener noreferrer">
+                rel="noopener noreferrer"
+            >
 
-                Acessar publicação
+                <span>
+                    Acessar publicação
+                </span>
 
                 <img
-                    src="../assets/arrowUp.png"
-                    alt="Link externo">
+                    src="${basePath}assets/arrowUp.png"
+                    alt="Link externo"
+                >
 
             </a>
 
